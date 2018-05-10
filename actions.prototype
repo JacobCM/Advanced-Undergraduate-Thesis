@@ -1,0 +1,356 @@
+MetaObject Rover : rover {  
+	property LFmotor : real
+	property LFbrake : real
+	property RFmotor : real
+	property RFbrake : real 
+	property LMmotor : real
+	property LMbrake : real
+	property LBmotor : real
+	property LBbrake : real
+	property RMmotor : real
+	property RMbrake : real
+	property RBmotor : real  
+	property RBbrake : real 
+	property Compass : real
+	 
+	property velX: real
+	property velY: real 
+	property velZ: real
+	
+	property sizeX : real
+	property sizeY : real
+	property sizeZ : real 
+	 
+	property posX : real
+	property posY : real 
+	property posZ : real
+	property network: bool
+	
+	Action getCompass() return(ret : real){
+		ret = Compass
+		Purpose: " get the degrees clockwise of North"
+	} 
+ 
+	Action testing () return (){
+		RMmotor = 4
+		Purpose : "test"
+	}
+	Action setPos() return (){
+		posX = 1
+		posY = 1  
+		posZ = posY
+		Purpose : "Set the position of the rover to 1,1"
+	}
+	Action increaseSpeed() return(){
+		LFmotor = LFmotor+1 
+		RFmotor = RFmotor+1 
+		LMmotor = LMmotor+1
+		RMmotor = RMmotor+1
+		LBmotor = LBmotor+1 
+		RBmotor = RBmotor+1
+	}
+}
+MetaObject Generic : generic{
+	property sizeX : int
+	property sizeY : int
+	property sizeZ : int  
+	property posX : int
+	property posY : int
+	property posZ : int 
+	property model: string
+	property mesh : string
+	property texture : string
+	property mass : int
+	
+}
+
+MetaObject Plane : others {
+	property sizeX : int
+	property sizeY : int
+	property sizeZ : int  
+	property posX : int 
+	property posY : int
+	property posZ : int 
+	
+}
+
+Object rock : Generic { 
+	
+	config{
+		posX = 10
+		posY = 10
+		posZ = 1
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Icosphere_001"
+		texture = "Rock6"
+		model = "RockSet"
+		mass = 1000
+	}
+}	
+
+Object Rover1 : Rover {
+
+	Action setForwardPower (amount : int) return ()	
+	{		
+		LFmotor = amount
+		LMmotor = amount
+		LBmotor = amount
+		RFmotor = amount
+		RMmotor = amount 
+		RBmotor = amount
+		Purpose : "change the power of all wheels to this value"
+	}
+	Action getCompass() return(ret : real){
+		ret = Compass
+		Purpose: " get the degrees clockwise of North"
+	} 
+	
+		Action incrementPower (amount : int) return ()
+	{	
+		LFmotor = amount+LFmotor
+		LMmotor = amount+LMmotor
+		LBmotor = amount+LBmotor
+		RFmotor = amount+RFmotor
+		RMmotor = amount+RMmotor
+		RBmotor = amount+RBmotor
+		Purpose : "Increment the power of all wheels by the amount"
+	}
+	Action setLRPower (leftPower : int, rightPower : int) return ()
+	{	
+		LFmotor = leftPower
+		LMmotor = leftPower
+		LBmotor = leftPower
+		RFmotor = rightPower
+		RMmotor = rightPower
+		RBmotor = rightPower
+		Purpose : "Set the power of the left and right wheels"
+	}
+	
+	Action GPSy () return (ret : real)
+	{	
+		ret = posY
+		Purpose : "get the Y coordinate"
+	}
+	Action GPSx () return (ret : real)
+	{	
+		ret = posX
+		Purpose : "get the X coordinate"
+	}
+	Action GPSz () return (ret : real)
+	{	
+		ret = posZ
+		Purpose : "get the Z coordinate"
+	}
+	 
+	config {
+		network = true 
+		sizeX = 1 
+		sizeY = 1
+		sizeZ = 1 
+		posX = 1
+		posY = 1  
+		posZ = 1
+	}	
+} 
+  
+Object Rover2 : Rover {
+
+	Action setForwardPower (amount : int) return ()	
+	{		
+		LFmotor = amount
+		LMmotor = amount
+		LBmotor = amount
+		RFmotor = amount
+		RMmotor = amount
+		RBmotor = amount
+	}
+		Action incrementPower (amount : int) return ()
+	{
+		LFmotor = amount+LFmotor
+		LMmotor = amount+LMmotor
+		LBmotor = amount+LBmotor
+		RFmotor = amount+RFmotor
+		RMmotor = amount+RMmotor
+		RBmotor = amount+RBmotor
+	}
+	Action setLRPower (leftPower : int, rightPower : int) return ()
+	{
+		LFmotor = leftPower
+		LMmotor = leftPower
+		LBmotor = leftPower
+		RFmotor = rightPower
+		RMmotor = rightPower
+		RBmotor = rightPower 
+	}
+	  
+	Action GPSy () return (ret : real) 
+	{	 
+		ret = posY 
+	}
+	Action GPSx () return (ret : real)
+	{	
+		ret = posX 
+	} 
+	Action GPSz () return (ret : real) 
+	{	
+		ret = posZ
+	}
+	  
+	config {
+		network = true  
+		sizeX = 1 
+		sizeY = 1
+		sizeZ = 1 
+		posX = 3 
+		posY = 1  
+		posZ = 1
+	}
+}
+Object land : Plane {
+	config {
+		posX = 0
+		posY = 0
+		posZ = 0
+		sizeX = 20
+		sizeY = 1
+		sizeZ = 20
+	}
+}
+
+Object checkpoint1 : Generic {
+	config{
+		posX = 0
+		posY = 1
+		posZ = 6
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint2 : Generic {
+	config{
+		posX = -11
+		posY = 1
+		posZ = 20
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint3 : Generic {
+	config{
+		posX = -11
+		posY = 1
+		posZ = -8
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint4 : Generic {
+	config{
+		posX = 4
+		posY = 1
+		posZ = 18
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint5 : Generic {
+	config{
+		posX = -15
+		posY = 1
+		posZ = -20
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint6 : Generic {
+	config{
+		posX = 29
+		posY = 1
+		posZ = -13
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint7 : Generic {
+	config{
+		posX = 7
+		posY = 1
+		posZ = -11
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Object checkpoint8 : Generic {
+	config{
+		posX = 22
+		posY = 1
+		posZ = 14
+		sizeX = 1
+		sizeY = 1
+		sizeZ = 1
+		mesh = "Circle"
+		texture = "CircleMaterial"
+		model = "circle"
+		mass = 1000
+	}
+}
+
+Env simulation {
+	Instance plane : land
+	Instance WALLY: Rover1
+	Instance Checkpoint1 : checkpoint1
+	Instance Checkpoint2 : checkpoint2
+	Instance Checkpoint3 : checkpoint3
+	Instance Checkpoint4 : checkpoint4
+	Instance Checkpoint5 : checkpoint5
+	Instance Checkpoint6 : checkpoint6
+	Instance Checkpoint7 : checkpoint7
+	Instance Checkpoint8 : checkpoint8
+	Channel control1 direction inout type TCP (port : 8886) assign WALLY 
+	Author: "Michal"
+	Purpose: "To test out the text file generation"
+}
